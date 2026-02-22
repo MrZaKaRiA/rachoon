@@ -38,7 +38,11 @@ export default class Document extends BaseAppModel {
 
   @computed()
   public get overdue() {
-    return isPast(this.data.dueDate)
+    return (
+      this.status !== DocumentStatus.Paid &&
+      this.status !== DocumentStatus.Draft &&
+      isPast(this.data.dueDate)
+    )
   }
 
   @computed()

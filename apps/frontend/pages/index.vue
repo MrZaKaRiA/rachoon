@@ -53,11 +53,11 @@ useDashboard().get();
           </div>
           <div class="stat-title text-error">Invoices overdue</div>
           <div class="stat-value">
-            {{ useFormat.toCurrency(useDashboard().dashboard.invoices.total) }}
+            {{ useFormat.toCurrency(useDashboard().dashboard.invoices.overdue.total) }}
           </div>
           <div class="stat-desc">
             net
-            {{ useFormat.toCurrency(useDashboard().dashboard.invoices.net) }}
+            {{ useFormat.toCurrency(useDashboard().dashboard.invoices.overdue.net) }}
           </div>
         </div>
 
