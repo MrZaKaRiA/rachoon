@@ -131,16 +131,16 @@ jobs:
         id: package-version
         run: |
           cd ./apps/backend
-          echo "VERSION=$(pnpm pkg get version | sed 's/"//g')" >> $GITHUB_OUTPUT
+          echo "VERSION=$(pnpm version patch)" >> $GITHUB_OUTPUT
       - name: Create and push tag
         run: |
           VERSION=${{ steps.package-version.outputs.VERSION }}
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
 
-          git tag "v${VERSION}"
-          git push origin "v${VERSION}"
-          echo "Created and pushed tag v${VERSION}"
+          git tag "${VERSION}"
+          git push origin "${VERSION}"
+          echo "Created and pushed tag ${VERSION}"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Generate changelog
@@ -199,4 +199,4 @@ jobs:
           tags: |
             ghcr.io/${{ github.actor }}/rachoon:${{ github.ref_name }}
             ghcr.io/${{ github.actor }}/rachoon:latest
-            ghcr.io/${{ github.actor }}/rachoon:v${{ steps.package-version.outputs.VERSION }}
+            ghcr.io/${{ github.actor }}/rachoon:${{ steps.package-version.outputs.VERSION }}
