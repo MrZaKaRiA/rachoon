@@ -71,11 +71,26 @@ export default class DashboardController {
       .select(Database.raw(`sum((data->>'net')::float) as net`))
       .first()
 
+    const overdueAmounts = await Document.query()
+      .where({
+        type: DocumentType.Invoice,
+        organizationId: ctx.auth.user?.organization.id,
+        status: DocumentStatus.Pending,
+      })
+      .whereRaw(`(data->>'dueDate')::timestamp < now()`)
+      .select(Database.raw(`sum((data->>'total')::float) as total`))
+      .select(Database.raw(`sum((data->>'net')::float) as net`))
+      .first()
+
     return {
       invoices: {
         net: invoiceAmounts?.$extras.net,
         total: invoiceAmounts?.$extras.total,
         pending: pendingInvoices,
+        overdue: {
+          net: overdueAmounts?.$extras.net || 0,
+          total: overdueAmounts?.$extras.total || 0,
+        },
       },
       reminders: {
         pending: pendingReminders,

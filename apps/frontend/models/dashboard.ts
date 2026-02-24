@@ -6,6 +6,10 @@ class Dashboard {
     net: 0,
     total: 0,
     pending: [] as Document[],
+    overdue: {
+      net: 0,
+      total: 0,
+    },
   };
   offers = {
     net: 0,
