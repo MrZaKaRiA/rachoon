@@ -96,7 +96,7 @@ jobs:
         id: package-version
         run: |
           cd ./apps/backend
-          echo "VERSION=$(npm version patch --no-git-tag-version)" >> $GITHUB_OUTPUT
+          echo "VERSION=$(bun pm version patch)" >> $GITHUB_OUTPUT
 
       - name: Create and push tag
         run: |
