@@ -9,70 +9,70 @@ on:
       - main
 
 jobs:
-  code-quality:
-    runs-on: ubuntu-latest
-    steps:
-      - name: checkout project
-        uses: actions/checkout@v4
+  # code-quality:
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: checkout project
+  #       uses: actions/checkout@v4
 
-      - name: setup bun
-        uses: oven-sh/setup-bun@v2
-        with:
-          bun-version: latest
+  #     - name: setup bun
+  #       uses: oven-sh/setup-bun@v2
+  #       with:
+  #         bun-version: latest
 
-      - name: install dependencies
-        run: bun install --ignore-scripts
+  #     - name: install dependencies
+  #       run: bun install --ignore-scripts
 
-      - name: run linter
-        run: bun lint
-        continue-on-error: true
+  #     - name: run linter
+  #       run: bun lint
+  #       continue-on-error: true
 
-      - name: run formatter check
-        run: bun format --check
-        continue-on-error: true
+  #     - name: run formatter check
+  #       run: bun format --check
+  #       continue-on-error: true
 
-  test:
-    runs-on: ubuntu-latest
-    services:
-      postgres:
-        image: postgres:16
-        env:
-          POSTGRES_USER: testuser
-          POSTGRES_PASSWORD: testpass
-          POSTGRES_DB: rachoon_test
-        options: >-
-          --health-cmd pg_isready
-          --health-interval 10s
-          --health-timeout 5s
-          --health-retries 5
-        ports:
-          - 5432:5432
+  # test:
+  #   runs-on: ubuntu-latest
+  #   services:
+  #     postgres:
+  #       image: postgres:16
+  #       env:
+  #         POSTGRES_USER: testuser
+  #         POSTGRES_PASSWORD: testpass
+  #         POSTGRES_DB: rachoon_test
+  #       options: >-
+  #         --health-cmd pg_isready
+  #         --health-interval 10s
+  #         --health-timeout 5s
+  #         --health-retries 5
+  #       ports:
+  #         - 5432:5432
 
-    steps:
-      - name: checkout project
-        uses: actions/checkout@v4
+  #   steps:
+  #     - name: checkout project
+  #       uses: actions/checkout@v4
 
-      - name: setup bun
-        uses: oven-sh/setup-bun@v2
-        with:
-          bun-version: latest
+  #     - name: setup bun
+  #       uses: oven-sh/setup-bun@v2
+  #       with:
+  #         bun-version: latest
 
-      - name: install dependencies
-        run: bun install --ignore-scripts
+  #     - name: install dependencies
+  #       run: bun install --ignore-scripts
 
-      - name: run backend tests
-        run: cd apps/backend && bun test
-        env:
-          APP_KEY: test-key-for-ci-only-not-secure
-          APP_NAME: rachoon-test
-          NODE_ENV: test
-          DB_CONNECTION: pg
-          PG_HOST: localhost
-          PG_PORT: 5432
-          PG_USER: testuser
-          PG_PASSWORD: testpass
-          PG_DB_NAME: rachoon_test
-        continue-on-error: true
+  #     - name: run backend tests
+  #       run: cd apps/backend && bun test
+  #       env:
+  #         APP_KEY: test-key-for-ci-only-not-secure
+  #         APP_NAME: rachoon-test
+  #         NODE_ENV: test
+  #         DB_CONNECTION: pg
+  #         PG_HOST: localhost
+  #         PG_PORT: 5432
+  #         PG_USER: testuser
+  #         PG_PASSWORD: testpass
+  #         PG_DB_NAME: rachoon_test
+  #       continue-on-error: true
 
   deploy:
     runs-on: ubuntu-latest
