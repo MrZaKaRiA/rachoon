@@ -82,13 +82,21 @@ export default class TemplatessController {
   }
 
   public async default(ctx: HttpContextContract) {
-    return await Template.query()
+    let defaultTemplate = await Template.query()
       .where({
         organizationId: ctx.auth.user?.organizationId,
         default: true,
       })
-      .orWhere({ organizationId: null, default: true })
       .firstOrFail()
+
+    if (!defaultTemplate) {
+      defaultTemplate = await Template.query()
+        .where({ organizationId: null, default: true })
+        .debug(true)
+        .firstOrFail()
+    }
+
+    return defaultTemplate
   }
 
   public async duplicate(ctx: HttpContextContract) {
