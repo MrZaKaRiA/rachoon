@@ -14,6 +14,11 @@ export default defineNuxtConfig({
       "/app/info": { proxy: "/api/info" },
     },
   },
+  vite: {
+    optimizeDeps: {
+      include: ["cronstrue"],
+    },
+  },
   modules: ["@pinia/nuxt", "@nuxtjs/tailwindcss"],
   build: {
     transpile: [
