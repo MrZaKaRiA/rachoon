@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { Document, DocumentStatus, DocumentType } from "~~/models/document";
-import cronstrue from "cronstrue";
+import * as cronstrue from "cronstrue";
 
 const props = defineProps({
   filter: { type: Array<string>, required: false, default: [] },

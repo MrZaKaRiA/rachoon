@@ -19,5 +19,12 @@
   },
   "pnpm": {
     "injectWorkspacePackages": true
-  }
+  },
+  "workspaces": [
+    "apps/*",
+    "packages/*",
+    "!**/build",
+    "!**/dist",
+    "!**/node_modules"
+  ]
 }

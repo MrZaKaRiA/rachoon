@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import cronstrue from "cronstrue";
+import * as cronstrue from "cronstrue";
 import { isLastDayOfMonth, getDaysInMonth } from "date-fns";
 
 const controller = () => useDocument();
