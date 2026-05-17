@@ -48,6 +48,10 @@ export default class HttpClient {
 
       return { body: camelcaseKeys(res._data as any, { deep: true }), headers: res.headers };
     } catch (e) {
+      if (e.message.includes("401 Unauthorized")) {
+        useAuth().logout();
+        return {};
+      }
       if (notify) {
         this.notifyError(e);
       }
